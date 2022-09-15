@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Form from "./components/Form";
+import Story from "./components/Story";
+import { useState } from "react";
+import { story, data } from "./data/story1";
 
 function App() {
+  const [values, setValues] = useState({});
+  const [page, setPage] = useState(0);
+  const handleSubmit = () => {
+    setPage(1);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        page === 0 ?
+        <Form
+          data={data}
+          isDisabled={Object.keys(values).length < data.length}
+          setValues={setValues}
+          values={values}
+          handleSubmit={handleSubmit}
+        />
+        :
+        <Story values={values} story={story}/>
+      }
     </div>
   );
 }
